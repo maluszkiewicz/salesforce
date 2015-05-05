@@ -1,0 +1,12 @@
+<apex:page controller="OpportunityView">
+    <apex:pageBlock title="Which Opportunity do you want to view?">
+        <apex:form id="oppForm">
+            <apex:actionFunction name="AJAXRefresh" action="{!printLineItem}" rerender="oppForm"/>
+            <apex:selectList value="{!selectedItem}" onchange="AJAXRefresh();" size="1" multiselect="false">
+                <apex:selectOptions value="{!items}"/>
+                <apex:actionSupport event="onchange" action="{!pageReference}" rerender="oppForm" status="myStatus2" />
+            </apex:selectList>
+            <apex:outputtext value="{!buildTable}" escape="false"/>
+        </apex:form>
+    </apex:pageBlock>
+</apex:page>
