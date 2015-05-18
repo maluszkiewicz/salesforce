@@ -1,9 +1,5 @@
 public class OpportunityView {
 
-    public PageReference pageReference() {
-        return null;
-    }
-
     String oppName;
     List<Opportunity> oppId;
     List<Opportunity> opportunities;
@@ -15,11 +11,10 @@ public class OpportunityView {
 
         return opportunityLineItems;
     }
-
+    
     String oppListToTable(List<OpportunityLineItem> oppList) {
-        String table = '<table style="margin-top:12px; border:outset 3px #35b4e9; width:100%;">';
-        integer size = oppList.size();
-        
+        String table = '<table id="opportunityLineItemsTable">'; 
+
         table += '<tr><th>Name:</th>';
         for(OpportunityLineItem o : oppList) {
                 table += '<td>' + o.Name + '</td>';
@@ -129,9 +124,7 @@ public class OpportunityView {
             oppLineItems = getOpportunityLineItems(opportunities[index].Id);
             output = oppListToTable(oppLineItems);
         }
-
         return output;
-
     }
     public List<SelectOption> getItems() {
         List<SelectOption> options = new List<SelectOption>();
@@ -140,7 +133,6 @@ public class OpportunityView {
         for(Opportunity o : opportunities) {
             options.add(new SelectOption(o.name,o.name));
         }
-
         return options;
     }
 }
