@@ -1,19 +1,18 @@
 public class OpportunityView {
 
-    String oppName;
     List<Opportunity> oppId;
-    List<Opportunity> opportunities;
+    @TestVisible List<Opportunity> opportunities;
     List<OpportunityLineItem> oppLineItems;
 
-    List<OpportunityLineItem> getOpportunityLineItems(String opportunityID) {
+    @TestVisible List<OpportunityLineItem> getOpportunityLineItems(String opportunityID) {
         List<OpportunityLineItem> opportunityLineItems = new List<OpportunityLineItem>();
         opportunityLineItems = [SELECT Name, Description, OpportunityId, Quantity, ListPrice, PricebookEntryId, Product2Id, ProductCode, ServiceDate, SortOrder, TotalPrice, UnitPrice FROM OpportunityLineItem WHERE OpportunityId=:opportunityID];
 
         return opportunityLineItems;
     }
     
-    String oppListToTable(List<OpportunityLineItem> oppList) {
-        String table = '<table id="opportunityLineItemsTable">'; 
+    @TestVisible String oppListToTable(List<OpportunityLineItem> oppList) {
+        String table = '<table id="customTable">'; 
 
         table += '<tr><th>Name:</th>';
         for(OpportunityLineItem o : oppList) {
@@ -96,21 +95,7 @@ public class OpportunityView {
         set;
     }
 
-    public String getSelectedItem() {
-         return oppName;
-    }
-
-    public void setSelectedItem(String oppName){
-        this.oppName = oppName;
-    }
-
-    public String getName() {
-        return 'chooseOpp';
-    }
-
-    public void printLineItem() {}
-
-    public String getBuildTable() {
+    public String getBuiltTable() {
         String output = ''; 
         integer index = 0;
         for(Opportunity o : opportunities) {
@@ -126,6 +111,7 @@ public class OpportunityView {
         }
         return output;
     }
+
     public List<SelectOption> getItems() {
         List<SelectOption> options = new List<SelectOption>();
         opportunities = [SELECT Name FROM Opportunity WHERE HasOpportunityLineItem=true ORDER BY CreatedDate ASC];
